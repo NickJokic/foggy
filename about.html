@@ -34,7 +34,7 @@
 </body>
 
 <script>
-    window.$ = window.jQuery = require('jQuery');
+    window.$ = window.jQuery = require('jquery');
     const ipc = require('electron').ipcRenderer
     $("#websiteLink").click(function() {
         ipc.send('openLink', 'http://' + 'www.nickjokic.com');

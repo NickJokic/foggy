@@ -1,4 +1,4 @@
-window.$ = window.jQuery = require('jQuery');
+window.$ = window.jQuery = require('jquery');
 var toastr = require('toastr');
 const ipc = require('electron').ipcRenderer
 var refresherInterval;

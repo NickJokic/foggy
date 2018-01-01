@@ -18,6 +18,7 @@ let appIcon = null
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let aboutWindow
 
 ipc.on('hideApp', function () {
     mainWindow.hide();
@@ -64,16 +65,21 @@ function createWindow() {
 
 
 function createTrayWindow() {
-    const iconName = process.platform === 'win32' ? 'icon-weather.png' : 'icon-weather.png'
-    const iconPath = path.join(__dirname, iconName)
+    const iconName = 'icon-weather.png';
+    const iconPath = path.join(__dirname, 'assets/', iconName)
     tray = new Tray(iconPath)
 
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'About',
             click: function () {
-                createAboutWindow();
+                if (!aboutWindow)
+                    createAboutWindow();
+                else
+                    aboutWindow.focus();
             }
+        }, {
+            type: 'separator'
         },
         {
             label: 'Quit',
@@ -86,7 +92,7 @@ function createTrayWindow() {
     tray.on('click', function (event) {
         toggleWindow();
 
-        /*if (mainWindow.isVisible() && process.defaultApp && event.metaKey) {
+        /*if (mainWindow.isVisible() && event.metaKey) {
             mainWindow.openDevTools({
                 mode: 'detach'
             });
@@ -134,19 +140,25 @@ function showWindow() {
 function createAboutWindow() {
 
     const modalPath = path.join('file://', __dirname, '/about.html')
-    let win = new BrowserWindow({
+
+    aboutWindow = new BrowserWindow({
         width: 450,
         height: 450,
         resizable: false,
-        show: true,
+        show: false,
         frame: true,
         vibrancy: 'dark'
-    })
-    win.on('close', function () {
-        win = null
-    })
-    win.loadURL(modalPath)
-    win.show()
+    });
+
+    aboutWindow.on('close', function () {
+        aboutWindow = null
+    });
+
+    aboutWindow.loadURL(modalPath)
+
+    aboutWindow.on('ready-to-show', function () {
+        aboutWindow.show();
+    });
 }
 
 // This method will be called when Electron has finished

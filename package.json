@@ -4,20 +4,42 @@
     "description": "Foggy - the less-is-more tray weather app!",
     "main": "main.js",
     "scripts": {
-        "start": "electron ."
+        "postinstall": "electron-builder install-app-deps",
+        "start": "electron .",
+        "pack": "build --dir",
+        "dist": "build"
+    },
+    "build": {
+        "appId": "com.nickjokic.foggy",
+        "mac": {
+            "category": "public.app-category.weather",
+            "type": "distribution",
+            "icon": "build/icons.icns"
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        },
+        "win": {
+            "target": "nsis",
+            "icon": "build/icon.ico"
+        }
     },
     "repository": "https://github.com/NickJokic/foggy",
     "keywords": [
-    "Electron",
-    "Foggy",
-    "weather",
-    "application",
-      "tray"
-  ],
-    "author": "Nick Jokic",
-    "license": "CC0-1.0",
+        "Electron",
+        "Foggy",
+        "weather",
+        "application",
+        "tray"
+    ],
+    "author": "Nick Jokic <info@nickjokic.com>",
+    "license": "MIT",
     "devDependencies": {
-        "electron": "~1.7.8"
+        "electron": "~1.7.8",
+        "electron-builder": "^19.50.0"
     },
     "dependencies": {
         "bootstrap": "^3.3.7",
