@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Foggy</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Foggy was created by Nick Jokic.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/weather-icons.min.css">
+    <link rel="stylesheet" href="css/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="https://use.fontawesome.com/7c31a6d0bb.js"></script>
+</head>
+
+<body id="aboutBody">
+
+    <section id="aboutSection">
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h1>Foggy <i class="wi wi-night-fog aboutIcon"></i></h1>
+                    <h2>Created by Nick Jokic <i class="wi wi-day-sunny aboutIcon"></i></h2>
+                    <p>January 2018</p>
+                    <p id="websiteLink">www.nickjokic.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+<script>
+    window.$ = window.jQuery = require('jQuery');
+    const ipc = require('electron').ipcRenderer
+    $("#websiteLink").click(function() {
+        ipc.send('openLink', 'http://' + 'www.nickjokic.com');
+    })
+</script>
+
+</html>

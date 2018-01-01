@@ -1,0 +1,27 @@
+{
+    "name": "Foggy",
+    "version": "1.0.0",
+    "description": "Foggy - the less-is-more tray weather app!",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": "https://github.com/NickJokic/foggy",
+    "keywords": [
+    "Electron",
+    "Foggy",
+    "weather",
+    "application",
+      "tray"
+  ],
+    "author": "Nick Jokic",
+    "license": "CC0-1.0",
+    "devDependencies": {
+        "electron": "~1.7.8"
+    },
+    "dependencies": {
+        "bootstrap": "^3.3.7",
+        "jquery": "^3.2.1",
+        "toastr": "^2.1.4"
+    }
+}
