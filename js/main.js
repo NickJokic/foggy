@@ -24,6 +24,7 @@ $(document).ready(function () {
     theWeatherApiCaller.getLocationBasedWeather();
     theWeatherApiCaller.locationWeatherCaller();
     theWeatherApiCaller.cityWeatherCaller();
+    theWeatherApiCaller.refreshWeatherCaller();
 });
 
 /*
@@ -305,11 +306,18 @@ var theWeatherApiCaller = (function () {
         });
     }
 
+    function refreshWeatherCaller() {
+        $("#refreshWeather").click(function () {
+            getCityWeather();
+        });
+    }
+
     return {
         getLocationBasedWeather: getLocationBasedWeather,
         locationWeatherCaller: locationWeatherCaller,
         cityWeatherCaller: cityWeatherCaller,
-        getCityWeather: getCityWeather
+        getCityWeather: getCityWeather,
+        refreshWeatherCaller: refreshWeatherCaller
     };
 
 })();

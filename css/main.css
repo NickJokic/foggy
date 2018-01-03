@@ -206,7 +206,7 @@ h5 {
     cursor: pointer;
 }
 
-#myLocation {
+.icon-function {
     color: #fff;
     z-index: 1000;
     transition: all 0.5s;
@@ -216,7 +216,7 @@ h5 {
     margin-bottom: 15px;
 }
 
-#myLocation:hover {
+.icon-function:hover {
     color: rebeccapurple;
     cursor: pointer;
 }
@@ -374,7 +374,7 @@ h5 {
 }
 
 @media screen and (max-width: 768px) {
-    #myLocation {
+    .icon-function {
         font-size: 2.1em;
     }
     h1 {
