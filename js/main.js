@@ -283,7 +283,7 @@ var theWeatherApiCaller = (function () {
         $("#currWindSpeed").html(ws);
         $("#windDirIcon").removeClass();
         $("#weatherIcon").removeClass();
-        $("#windDirIcon").addClass("wi wi-wind towards-" + wd + "-deg");
+        $("#windDirIcon").addClass("wi wi-wind towards-" + Math.round(wd) + "-deg");
         $("#weatherIcon").addClass("wi wi-owm-" + wc + " animated infinite pulse");
         $("#weatherDescription").html(d);
         $("#fahrenheit").removeClass("activeUnit");
