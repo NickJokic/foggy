@@ -59,7 +59,6 @@ function createWindow() {
 
     mainWindow.on('ready-to-show', function () {
         showWindow();
-
     });
 }
 
@@ -92,6 +91,7 @@ function createTrayWindow() {
     tray.on('click', function (event) {
         toggleWindow();
 
+        /* CMD-click --> open developer tools */
         /*if (mainWindow.isVisible() && event.metaKey) {
             mainWindow.openDevTools({
                 mode: 'detach'

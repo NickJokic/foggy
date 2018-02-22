@@ -2,30 +2,81 @@ window.$ = window.jQuery = require('jquery');
 var toastr = require('toastr');
 const ipc = require('electron').ipcRenderer
 var refresherInterval;
+var connectionCheck;
+
+window.ononline = function () {
+    $("#statusDot").removeClass('statusOffline');
+    $("#statusDescription").html("online");
+}
+window.onoffline = function () {
+    $("#statusDot").addClass('statusOffline');
+    $("#statusDescription").html("offline");
+}
 
 $(document).ready(function () {
-    // toastr options
-    toastr.options.positionClass = 'toast-bottom-center';
-    toastr.options.timeOut = 1200;
-    toastr.options.fadeOut = 250;
-    toastr.options.fadeIn = 250;
-    toastr.options.closeDuration = 300;
-    toastr.options.showDuration = 300;
-    toastr.options.preventDuplicates = true;
-    toastr.options.progressBar = true;
-
-    //DOM calls
-    theDomManipulator.fadeInIntro(1300);
-    theDomManipulator.initOverlay();
-    theDomManipulator.changeMetrics();
-    theDomManipulator.exitApp();
-
-    //weather API calls
-    theWeatherApiCaller.getLocationBasedWeather();
-    theWeatherApiCaller.locationWeatherCaller();
-    theWeatherApiCaller.cityWeatherCaller();
-    theWeatherApiCaller.refreshWeatherCaller();
+    theAppHelper.checkConnection();
 });
+
+
+/* Main app state helper */
+var theAppHelper = (function () {
+
+    function initApp() {
+
+        // toastr options
+        toastr.options.positionClass = 'toast-bottom-center';
+        toastr.options.timeOut = 1200;
+        toastr.options.fadeOut = 250;
+        toastr.options.fadeIn = 250;
+        toastr.options.closeDuration = 300;
+        toastr.options.showDuration = 300;
+        toastr.options.preventDuplicates = true;
+        toastr.options.progressBar = true;
+
+        //DOM calls
+        theDomManipulator.fadeInIntro(1300);
+        theDomManipulator.initOverlay();
+        theDomManipulator.changeMetrics();
+        theDomManipulator.exitApp();
+
+        //weather API calls
+        theWeatherApiCaller.getLocationBasedWeather();
+        theWeatherApiCaller.locationWeatherCaller();
+        theWeatherApiCaller.cityWeatherCaller();
+        theWeatherApiCaller.refreshWeatherCaller();
+    }
+
+    function checkConnectionStatus() {
+        return navigator.onLine ? true : false;
+    }
+
+    function checkConnection() {
+        if (checkConnectionStatus()) {
+            initApp();
+            $("#statusDot").removeClass('statusOffline');
+            $("#statusDescription").html("online");
+
+        } else {
+            connectionCheck = setInterval(function () {
+                if (navigator.onLine) {
+                    initApp();
+                    $("#statusDot").removeClass('statusOffline');
+                    $("#statusDescription").html("online");
+                    clearInterval(connectionCheck)
+                } else {
+                    $("#statusDot").addClass('statusOffline');
+                    $("#statusDescription").html("offline");
+
+                }
+            }, 1000);
+        }
+    }
+
+    return {
+        checkConnection: checkConnection,
+        checkConnectionStatus: checkConnectionStatus
+    }
+})();
 
 /*
 DOM modifier module
@@ -284,6 +335,7 @@ var theWeatherApiCaller = (function () {
         $("#currWindSpeed").html(ws);
         $("#windDirIcon").removeClass();
         $("#weatherIcon").removeClass();
+        $("#windDirHeading").html("wind direction")
         $("#windDirIcon").addClass("wi wi-wind towards-" + Math.round(wd) + "-deg");
         $("#weatherIcon").addClass("wi wi-owm-" + wc + " animated infinite pulse");
         $("#weatherDescription").html(d);
@@ -295,20 +347,30 @@ var theWeatherApiCaller = (function () {
 
     function cityWeatherCaller() {
         $("#searchButton").click(function () {
-            city = $("#searchInput").val();
-            getCityWeather();
+            if (theAppHelper.checkConnectionStatus()) {
+                city = $("#searchInput").val();
+                getCityWeather();
+            } else {
+                toastr.error("Internet connection not working!")
+            }
         });
     }
 
     function locationWeatherCaller() {
         $("#myLocation").click(function () {
-            getLocationBasedWeather();
+            if (theAppHelper.checkConnectionStatus())
+                getLocationBasedWeather();
+            else
+                toastr.error("Internet connection not working!")
         });
     }
 
     function refreshWeatherCaller() {
         $("#refreshWeather").click(function () {
-            getCityWeather();
+            if (theAppHelper.checkConnectionStatus())
+                getCityWeather();
+            else
+                toastr.error("Internet connection not working!")
         });
     }
 
