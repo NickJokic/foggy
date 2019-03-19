@@ -38,13 +38,13 @@
     "author": "Nick Jokic <info@nickjokic.com>",
     "license": "MIT",
     "devDependencies": {
-        "electron": "^1.8.4",
+        "electron": "^1.8.8",
         "electron-builder": "^19.56.2"
     },
     "dependencies": {
-        "bootstrap": "^3.3.7",
+        "bootstrap": "^3.4.1",
         "jquery": "^3.3.1",
-        "npm": "^5.8.0",
+        "npm": "^6.9.0",
         "toastr": "^2.1.4"
     }
 }
